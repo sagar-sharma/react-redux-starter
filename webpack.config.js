@@ -1,11 +1,14 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+var webpack = require("webpack");
 
 module.exports = {
-  entry: "./src/index.js",
+  mode: "development",
+  entry: ["webpack-hot-middleware/client?reload=true", "./src/index.js"],
   output: {
     path: path.join(__dirname, "dist/"),
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: "/"
   },
   module: {
     rules: [
@@ -38,10 +41,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html"
-    })
-  ],
-  devServer: {
-    contentBase: "./",
-    historyApiFallback: true
-  }
+    }),
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };
